@@ -9,5 +9,7 @@ setup(
     [console_scripts]
     doi_lookup=refman:doi_lookup
     listfiles=refman:listfiles
+    rename_by_doi=refman:rename_by_doi
+    process_file=refman:process_file
     '''
 )
