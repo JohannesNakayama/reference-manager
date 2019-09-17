@@ -7,9 +7,9 @@ setup(
     py_modules=['refman'],
     entry_points='''
     [console_scripts]
-    doi_lookup=refman:doi_lookup
-    listfiles=refman:listfiles
-    rename_by_doi=refman:rename_by_doi
-    process_file=refman:process_file
+    rf_help=refman:rf_help
+    rf_init=refman:rf_init
+    rf_list_unproc=refman:rf_list_unproc
+    rf_process=refman:rf_process
     '''
 )

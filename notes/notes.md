@@ -59,5 +59,12 @@
         takes several tags and outputs all files that are associated with that tag
         similar to create_report, but does not create a pdf file (instead gives stdout report)
 
+# Folder structure
 
-
+    * files
+        * unprocessed
+        * unreviewed
+        * reviewed
+    * reports
+    * reviews
+    * data
