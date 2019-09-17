@@ -14,8 +14,7 @@ def rf_help():
     2) rf_init: initialize project
     3) save your pdf file in the directory /files/0_unproc/
     4) rf_list_unproc: list unprocessed files
-    5) rf_process: process your files
-    6) in step 5, a template for a review is created in the /review folder
+    5) rf_process: process a file
     ''')
 
 @click.command()
