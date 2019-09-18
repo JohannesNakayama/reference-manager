@@ -2,6 +2,7 @@ import click
 import os
 import requests
 import json
+import re
 
 @click.command()
 def rf_help():
@@ -62,11 +63,24 @@ def rf_process(file):
             pub_type = input('publication type [either "book", "article" or "other"]: ')
             if pub_type == 'article':
                 data = _article()
-                json_string = json.dumps(data, sort_keys=True)
-                json_dest = os.path.join('data', 'TEST.json')
-                with open(json_dest, 'w') as json_file:
-                    json.dump(data, json_file)
-                print('Your entry was successfully saved.')
+                flag = True
+                while flag:
+                    pr = 'Please close the file ' + file + ' [y=done] '
+                    confirmation = input(pr)
+                    if confirmation == 'y':
+                        flag = False
+                    else: 
+                        print('That did not work. Please try again.')
+                try:
+                    new_file = data['abbr'] + '.pdf'
+                    os.rename(file_path, os.path.join('files', '0_unrev', new_file))
+                    json_string = json.dumps(data, sort_keys=True)
+                    json_dest = os.path.join('data', data['abbr'] + '.json')
+                    with open(json_dest, 'w') as json_file:
+                        json.dump(data, json_file)
+                    print('Your entry was successfully saved.')
+                except:
+                    print('Something went wrong.')
         else:
             print('This file does not seem to exist')
             print('--- aborted ---')
@@ -141,10 +155,24 @@ def _article():
             print('wrong input')
             print('--- aborted ---')
             flag = False
+    a = authors[0].split(',')[0].lower()
+    b = ''.join([e[0] for e in re.sub('[^A-Za-z0-9]+', ' ', title).lower().strip().split()])
+    c = str(year)
+    abbr = '_'.join([a, b, c])
     entry = {
+        'abbr': abbr,
         'title': title,
         'year': year,
         'authors': authors,
         'tags': tags
     }
-    return entry
+    return entry    
+
+def _load_json():
+    json_files = [json_pot for json_pot in os.listdir('data') if json_pot.endswith('.json')]
+    working_data = {}
+    for index, js in enumerate(json_files):
+        with open(os.path.join('data', js)) as json_file:
+            json_text = json.load(json_file)
+            working_data[json_text['abbr']] = json_text
+    return working_data
